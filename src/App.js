@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import LanguageSelectionComponent from "./LanguageSelectionComponent";
 
 function App() {
+  const [selectedOptions, setSelectedOptions] = useState();
+  const options = ["en-US", "en-GB", "pt-BR"];
+  const handleSelect = (e) => {
+    setSelectedOptions(e.target.value);
+  };
+  const displayDate =
+    selectedOptions &&
+    new Intl.DateTimeFormat(selectedOptions, {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    })
+      .format(new Date())
+      .toString();
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>Hello</div>
+      <LanguageSelectionComponent
+        options={options.map((v) => {
+          return { value: v, label: v };
+        })}
+        selectedOptions={selectedOptions}
+        handleSelect={handleSelect}
+      />
+      {displayDate || "-"}
     </div>
   );
 }
